@@ -39,7 +39,7 @@
 #include "lwip/stats.h"
 #include "lwip/tcp.h"
 
-#include "LI_modbus.h" //TODO
+#include "LI_modbus.h"
 
 #if LWIP_TCP
 
@@ -88,8 +88,8 @@ void tcp_echoserver_init(void)
   {
     err_t err;
     
-    /* bind echo_pcb to port 7 (ECHO protocol) */
-    err = tcp_bind(tcp_echoserver_pcb, IP_ADDR_ANY, 7);
+    /* bind echo_pcb to port 502 (Modbus TCP) */
+    err = tcp_bind(tcp_echoserver_pcb, IP_ADDR_ANY, 502);
     
     if (err == ERR_OK)
     {
@@ -181,22 +181,10 @@ static err_t tcp_echoserver_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p
   {
     /* remote host closed connection */
     es->state = ES_CLOSING;
-    if(es->p == NULL)
-    {
-       /* we're done sending, close connection */
-       tcp_echoserver_connection_close(tpcb, es);
-    }
-    else
-    {
-      /* we're not done yet */
-      /* acknowledge received packet */
-      tcp_sent(tpcb, tcp_echoserver_sent);
-      
-      /* send remaining data*/
-      tcp_echoserver_send(tpcb, es);
-    }
+    /* no pending response buffer to drain – close immediately */
+    tcp_echoserver_connection_close(tpcb, es);
     ret_err = ERR_OK;
-  }   
+  }
   /* else : a non empty frame was received from client but for some reason err != ERR_OK */
   else if(err != ERR_OK)
   {
@@ -208,40 +196,45 @@ static err_t tcp_echoserver_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p
     }
     ret_err = err;
   }
-  else if(es->state == ES_ACCEPTED)
+  else if(es->state == ES_ACCEPTED || es->state == ES_RECEIVED)
   {
-    /* first data chunk in p->payload */
+    /* ------------------------------------------------------------------ */
+    /* Modbus TCP processing                                               */
+    /* ------------------------------------------------------------------ */
+    uint8_t  modbus_resp[MODBUS_TCP_MAX_ADU_SIZE];
+    uint16_t modbus_resp_len = 0U;
+
     es->state = ES_RECEIVED;
-    
-    /* store reference to incoming pbuf (chain) */
-    es->p = p;
-    
-    /* initialize LwIP tcp_sent callback function */
-    tcp_sent(tpcb, tcp_echoserver_sent);
-    
-    /* send back the received data (echo) */
-    tcp_echoserver_send(tpcb, es);
-    
-    ret_err = ERR_OK;
-  }
-  else if (es->state == ES_RECEIVED)
-  {
-    /* more data received from client and previous data has been already sent*/
-    if(es->p == NULL)
+
+    /* Acknowledge the received bytes to the TCP stack */
+    tcp_recved(tpcb, p->tot_len);
+
+    /* Copy contiguous payload if the pbuf chain has more than one chunk */
+    if (p->next != NULL)
     {
-      es->p = p;
-  
-      /* send back received data */
-      tcp_echoserver_send(tpcb, es);
+      uint8_t  flat_buf[MODBUS_TCP_MAX_ADU_SIZE];
+      uint16_t flat_len = p->tot_len;
+      pbuf_copy_partial(p, flat_buf, flat_len, 0);
+      pbuf_free(p);
+
+      if (LI_Modbus_TCP_Process(flat_buf, flat_len, modbus_resp, &modbus_resp_len) == MODBUS_OK)
+      {
+        tcp_write(tpcb, modbus_resp, modbus_resp_len, TCP_WRITE_FLAG_COPY);
+        tcp_output(tpcb);
+      }
     }
     else
     {
-      struct pbuf *ptr;
-
-      /* chain pbufs to the end of what we recv'ed previously  */
-      ptr = es->p;
-      pbuf_chain(ptr,p);
+      if (LI_Modbus_TCP_Process((const uint8_t *)p->payload, p->len,
+                                modbus_resp, &modbus_resp_len) == MODBUS_OK)
+      {
+        tcp_write(tpcb, modbus_resp, modbus_resp_len, TCP_WRITE_FLAG_COPY);
+        tcp_output(tpcb);
+      }
+      pbuf_free(p);
     }
+
+    es->p = NULL;
     ret_err = ERR_OK;
   }
   else if(es->state == ES_CLOSING)

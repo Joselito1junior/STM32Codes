@@ -75,8 +75,8 @@ all: main-build
 main-build: lwip_rtos_mx65_modbus_tcp.elf secondary-outputs
 
 # Tool invocations
-lwip_rtos_mx65_modbus_tcp.elf lwip_rtos_mx65_modbus_tcp.map: $(OBJS) $(USER_OBJS) C:\Users\junio\STM32CubeIDE\workspace_1.19.0\STM32Codes\lwip_rtos_mx65_modbus_tcp\STM32F767ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "lwip_rtos_mx65_modbus_tcp.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\junio\STM32CubeIDE\workspace_1.19.0\STM32Codes\lwip_rtos_mx65_modbus_tcp\STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lwip_rtos_mx65_modbus_tcp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+lwip_rtos_mx65_modbus_tcp.elf lwip_rtos_mx65_modbus_tcp.map: $(OBJS) $(USER_OBJS) /home/joselitojunior/STM32CubeIDE/workspace_1.19.0/STM32Codes/lwip_rtos_mx65_modbus_tcp/STM32F767ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "lwip_rtos_mx65_modbus_tcp.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"/home/joselitojunior/STM32CubeIDE/workspace_1.19.0/STM32Codes/lwip_rtos_mx65_modbus_tcp/STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lwip_rtos_mx65_modbus_tcp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

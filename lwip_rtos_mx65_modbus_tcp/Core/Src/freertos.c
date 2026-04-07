@@ -27,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "lwip.h"
 #include "tcp_echoserver.h"
+#include "LI_modbus.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -130,6 +131,7 @@ void StartDefaultTask(void *argument)
   MX_LWIP_Init();
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
+  LI_Modbus_Init();
   tcp_echoserver_init();
 
   for(;;)

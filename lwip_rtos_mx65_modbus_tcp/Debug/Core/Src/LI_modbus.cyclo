@@ -1,0 +1,4 @@
+../Core/Src/LI_modbus.c:43:6:LI_Modbus_Init	2
+../Core/Src/LI_modbus.c:59:17:LI_Modbus_TCP_Process	1
+../Core/Src/LI_modbus.c:67:17:LI_Modbus_RTU_Process	1
+../Core/Src/LI_modbus.c:75:11:LI_Modbus_GetRegisters	1

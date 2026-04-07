@@ -6,15 +6,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.c \
-../MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.c 
+../MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.c \
+../MyMiddlewares/Third_Party/stm_modbus/src/tcp_modserver.c 
 
 OBJS += \
 ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.o \
-./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.o 
+./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.o \
+./MyMiddlewares/Third_Party/stm_modbus/src/tcp_modserver.o 
 
 C_DEPS += \
 ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.d \
-./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.d 
+./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.d \
+./MyMiddlewares/Third_Party/stm_modbus/src/tcp_modserver.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -24,7 +27,7 @@ MyMiddlewares/Third_Party/stm_modbus/src/%.o MyMiddlewares/Third_Party/stm_modbu
 clean: clean-MyMiddlewares-2f-Third_Party-2f-stm_modbus-2f-src
 
 clean-MyMiddlewares-2f-Third_Party-2f-stm_modbus-2f-src:
-	-$(RM) ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.cyclo ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.d ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.o ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.su ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.cyclo ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.d ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.o ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.su
+	-$(RM) ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.cyclo ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.d ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.o ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.su ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.cyclo ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.d ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.o ./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.su ./MyMiddlewares/Third_Party/stm_modbus/src/tcp_modserver.cyclo ./MyMiddlewares/Third_Party/stm_modbus/src/tcp_modserver.d ./MyMiddlewares/Third_Party/stm_modbus/src/tcp_modserver.o ./MyMiddlewares/Third_Party/stm_modbus/src/tcp_modserver.su
 
 .PHONY: clean-MyMiddlewares-2f-Third_Party-2f-stm_modbus-2f-src
 

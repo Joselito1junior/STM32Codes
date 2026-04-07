@@ -1,3 +1,4 @@
+"./Core/Src/APP_Network.o"
 "./Core/Src/LI_modbus.o"
 "./Core/Src/freertos.o"
 "./Core/Src/gpio.o"
@@ -8,7 +9,6 @@
 "./Core/Src/syscalls.o"
 "./Core/Src/sysmem.o"
 "./Core/Src/system_stm32f7xx.o"
-"./Core/Src/tcp_echoserver.o"
 "./Core/Startup/startup_stm32f767zitx.o"
 "./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal.o"
 "./Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_cortex.o"
@@ -122,3 +122,4 @@
 "./Middlewares/Third_Party/LwIP/system/OS/sys_arch.o"
 "./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus.o"
 "./MyMiddlewares/Third_Party/stm_modbus/src/stm_modbus_pdu.o"
+"./MyMiddlewares/Third_Party/stm_modbus/src/tcp_modserver.o"

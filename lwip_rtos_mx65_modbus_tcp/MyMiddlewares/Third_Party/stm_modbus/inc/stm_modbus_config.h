@@ -1,29 +1,19 @@
 /**
  * @file    stm_modbus_config.h
- * @brief   User-configurable settings for the stm_modbus library.
+ * @brief   Protocol-level tuneable limits for the stm_modbus library.
  *
- *  Edit the values in this file to adapt the library to your application.
- *  All other library headers include this file; do NOT modify stm_modbus.h
- *  directly for tuneable parameters.
+ *  These values control internal buffer sizes and protocol constraints.
+ *  They are part of the library and should rarely need changing.
+ *
+ *  Application-specific settings (unit ID, number of registers, transport
+ *  mode, etc.) belong in LI_modbus_config.h, not here.
  */
 
 #ifndef STM_MODBUS_CONFIG_H_
 #define STM_MODBUS_CONFIG_H_
 
 /* --------------------------------------------------------------------------- */
-/* Transport settings                                                           */
-/* --------------------------------------------------------------------------- */
-
-/**
- * @brief TCP port the Modbus server listens on.
- *
- * The standard Modbus TCP port is 502.  Change only if your network requires
- * a non-standard port.
- */
-#define MODBUS_TCP_PORT             502U
-
-/* --------------------------------------------------------------------------- */
-/* Protocol limits                                                              */
+/* Protocol limits  (Modbus specification – change only if you know why)       */
 /* --------------------------------------------------------------------------- */
 
 /**
@@ -37,30 +27,15 @@
 /**
  * @brief Maximum number of holding registers that may be read in one FC03
  *        request (Modbus specification limit: 125).
- *
- * Reducing this value limits the number of registers a master can request at
- * once.  Do not exceed 125.
  */
 #define MODBUS_FC03_MAX_REGS        125U
 
 /* --------------------------------------------------------------------------- */
-/* Application register table                                                   */
+/* Forwarded application values                                                 */
+/* The library needs MODBUS_APP_NUM_REGS and MODBUS_APP_UNIT_ID at compile     */
+/* time.  They are defined in LI_modbus_config.h and re-exported here so that  */
+/* stm_modbus.h does not need to know about the application header directly.   */
 /* --------------------------------------------------------------------------- */
-
-/**
- * @brief Number of holding registers exposed by this device.
- *
- * Registers are addressed 0x0000 … (MODBUS_APP_NUM_REGS - 1) on the bus.
- * Must be at least 1.
- */
-#define MODBUS_APP_NUM_REGS         10U
-
-/**
- * @brief Unit / slave identifier of this device on the Modbus network (1–247).
- *
- * For Modbus TCP the Unit ID is carried in the MBAP header.
- * For Modbus RTU it is the first byte of each frame.
- */
-#define MODBUS_APP_UNIT_ID          1U
+#include "LI_modbus_config.h"
 
 #endif /* STM_MODBUS_CONFIG_H_ */

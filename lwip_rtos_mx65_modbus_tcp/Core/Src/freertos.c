@@ -26,8 +26,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lwip.h"
-#include "tcp_echoserver.h"
 #include "LI_modbus.h"
+#include "APP_Network.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,6 +48,11 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 extern struct netif gnetif;
+
+static const APP_Network_Config_t net_cfg = {
+    .transport = LI_MODBUS_TCP,
+    .role      = LI_MODBUS_SERVER,
+};
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -130,16 +135,10 @@ void StartDefaultTask(void *argument)
   /* init code for LWIP */
   MX_LWIP_Init();
   /* USER CODE BEGIN StartDefaultTask */
-  /* Infinite loop */
-  LI_Modbus_Init();
-  tcp_echoserver_init();
+  APP_Network_Init(&net_cfg);
 
-  for(;;)
-  {
-    ethernetif_input(&gnetif);
-    sys_check_timeouts();
-
-  }
+  /* All network activity is handled inside LI_Modbus – suspend this task */
+  osThreadSuspend(osThreadGetId());
   /* USER CODE END StartDefaultTask */
 }
 

@@ -1,4 +1,5 @@
-../Core/Src/LI_modbus.c:43:6:LI_Modbus_Init	2
-../Core/Src/LI_modbus.c:59:17:LI_Modbus_TCP_Process	1
-../Core/Src/LI_modbus.c:67:17:LI_Modbus_RTU_Process	1
-../Core/Src/LI_modbus.c:75:11:LI_Modbus_GetRegisters	1
+../Core/Src/LI_modbus.c:54:13:li_modbus_tcp_server_task	1
+../Core/Src/LI_modbus.c:72:6:LI_Modbus_Init	4
+../Core/Src/LI_modbus.c:117:17:LI_Modbus_TCP_Process	1
+../Core/Src/LI_modbus.c:125:17:LI_Modbus_RTU_Process	1
+../Core/Src/LI_modbus.c:133:11:LI_Modbus_GetRegisters	1

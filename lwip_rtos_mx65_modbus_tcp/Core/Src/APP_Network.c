@@ -16,8 +16,6 @@
 #include "stdio.h"
 
 
-static void app_network_callback(uint8_t event, void *event_data);
-
 /* --------------------------------------------------------------------------- */
 /* Public API implementation                                                    */
 /* --------------------------------------------------------------------------- */
@@ -32,25 +30,9 @@ void APP_Network_Init(const APP_Network_Config_t *cfg)
     /* Initialise the Ethernet transport layer (TCP servers + polling task) */
     if (cfg->transport == LI_MODBUS_TCP)
     {
-        LI_Eth_Init(app_network_callback);
+        LI_Eth_Init();
     }
 
     /* Initialise the Modbus protocol layer (slave context + register table) */
     LI_Modbus_Init(cfg->transport, cfg->role);
-}
-
-static void app_network_callback(uint8_t event, void *event_data)
-{
-    const char *msg = ((char *)event_data != NULL) ? (char *)event_data : "";
-
-    switch (event)
-    {
-        case 0: /* Example event code */
-            printf("Network event: %s\n", msg);
-            break;
-
-        default:
-            printf("Unknown network event (%d): %s\n", event, msg);
-            break;
-    }
 }

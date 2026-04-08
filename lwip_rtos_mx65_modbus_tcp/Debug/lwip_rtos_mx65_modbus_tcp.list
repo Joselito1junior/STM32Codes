@@ -517,10 +517,10 @@ void LI_Modbus_Init(LI_Modbus_Transport_t transport, LI_Modbus_Role_t role)
  8000666:	81fb      	strh	r3, [r7, #14]
  8000668:	e007      	b.n	800067a <LI_Modbus_Init+0x26>
     {
-        li_holding_regs[i] = 1U;
+        li_holding_regs[i] = 0U;
  800066a:	89fb      	ldrh	r3, [r7, #14]
  800066c:	4a0f      	ldr	r2, [pc, #60]	@ (80006ac <LI_Modbus_Init+0x58>)
- 800066e:	2101      	movs	r1, #1
+ 800066e:	2100      	movs	r1, #0
  8000670:	f822 1013 	strh.w	r1, [r2, r3, lsl #1]
     for (i = 0U; i < LI_MODBUS_NUM_REGS; i++)
  8000674:	89fb      	ldrh	r3, [r7, #14]

@@ -75,7 +75,7 @@ void LI_Modbus_Init(LI_Modbus_Transport_t transport, LI_Modbus_Role_t role)
     uint16_t i;
     for (i = 0U; i < LI_MODBUS_NUM_REGS; i++)
     {
-        li_holding_regs[i] = 1U;
+        li_holding_regs[i] = 0U;
     }
 
     /* Register the table with the stm_modbus slave context */

@@ -1,0 +1,8 @@
+../Core/Src/LI_Eth.c:32:7:li_tcp_server_accept	2
+../Core/Src/LI_Eth.c:63:6:li_tcp_server_error	2
+../Core/Src/LI_Eth.c:75:7:li_tcp_server_poll	4
+../Core/Src/LI_Eth.c:97:7:li_tcp_server_sent	3
+../Core/Src/LI_Eth.c:118:6:li_tcp_server_send	8
+../Core/Src/LI_Eth.c:154:6:li_tcp_server_connection_close	2
+../Core/Src/LI_Eth.c:174:13:li_eth_polling_task	1
+../Core/Src/LI_Eth.c:190:6:LI_Eth_Init	1

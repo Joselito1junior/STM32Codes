@@ -22,6 +22,7 @@
 #ifndef INC_APP_NETWORK_H_
 #define INC_APP_NETWORK_H_
 
+#include "LI_Eth.h"      /* LI_Eth_Init                                      */
 #include "LI_modbus.h"   /* LI_Modbus_Transport_t, LI_Modbus_Role_t, config  */
 
 /* --------------------------------------------------------------------------- */

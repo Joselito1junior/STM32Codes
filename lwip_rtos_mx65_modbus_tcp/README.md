@@ -141,3 +141,13 @@ client.close()
 
 - `LI_MODBUS_TRANSPORT = 1` → Modbus RTU via UART
 - `LI_MODBUS_ROLE = 1` → Modbus Client/Master (TCP e RTU)
+
+
+## Configuração para usar a USART2 STM32 como server
+1. Mode: Asynchronous
+2. DMA Settings:
+    USART2RX: Priority: Very High
+3. DMA Request Settings
+    Mode: Circular
+4. NVIC Settings
+    USART2 global interrupt: Enable

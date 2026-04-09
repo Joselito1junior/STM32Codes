@@ -28,6 +28,7 @@
 #include "lwip.h"
 #include "LI_modbus.h"
 #include "APP_Network.h"
+#include "APP_Sensors.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -53,6 +54,12 @@ static const APP_Network_Config_t net_cfg = {
     .transport = LI_MODBUS_TCP,
     .role      = LI_MODBUS_SERVER,
 };
+
+static const APP_Sensors_Config_t sensors_cfg = {
+    .transport = LI_MODBUS_RTU,
+    .role      = LI_MODBUS_SERVER,
+};
+
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -132,10 +139,12 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
+  
   /* init code for LWIP */
   MX_LWIP_Init();
   /* USER CODE BEGIN StartDefaultTask */
   APP_Network_Init(&net_cfg);
+  APP_Sensors_Init(&sensors_cfg);
 
   /* All network activity is handled inside LI_Modbus – suspend this task */
   osThreadSuspend(osThreadGetId());

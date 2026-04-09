@@ -167,36 +167,9 @@ void li_tcp_server_connection_close(struct tcp_pcb *tpcb, li_tcp_conn_t *conn)
     tcp_close(tpcb);
 }
 
-/* --------------------------------------------------------------------------- */
-/* Private polling task                                                         */
-/* --------------------------------------------------------------------------- */
-
-static void li_eth_polling_task(void *argument)
-{
-    extern struct netif gnetif;
-    (void)argument;
-
-    for (;;)
-    {
-        ethernetif_input(&gnetif);
-        sys_check_timeouts();
-    }
-}
-
-/* --------------------------------------------------------------------------- */
-/* Public API implementation                                                    */
-/* --------------------------------------------------------------------------- */
 
 void LI_Eth_Init(void)
 {
     /* Start all TCP servers */
     tcp_modserver_init();
-
-    /* Create the Ethernet polling task */
-    static const osThreadAttr_t eth_task_attr = {
-        .name       = "ethPolling",
-        .stack_size = 256 * 4,
-        .priority   = (osPriority_t) osPriorityNormal,
-    };
-    osThreadNew(li_eth_polling_task, NULL, &eth_task_attr);
 }

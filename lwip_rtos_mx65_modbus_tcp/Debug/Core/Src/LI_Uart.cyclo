@@ -1,0 +1,3 @@
+../Core/Src/LI_Uart.c:35:6:LI_Uart_Init	1
+../Core/Src/LI_Uart.c:54:6:HAL_UART_RxCpltCallback	2
+../Core/Src/LI_Uart.c:64:6:receive_uart_task	5

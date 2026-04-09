@@ -1,36 +1,35 @@
 /*
- * APP_Network.c
+ * APP_Sensors.c
  *
  *  Created on: Apr 7, 2026
  *      Author: Joselito Junior
  *
- *  Application network layer – top-level initialisation.
+ *  Application sensors layer – top-level initialisation.
  *
- *  Translates the APP_Network_Config_t selected by the application into the
- *  appropriate LI_Modbus initialisation call.
+ *  Translates the APP_Sensors_Config_t selected by the application into the
+ *  appropriate LI_Sensors initialisation call.
  */
 
-#include "APP_Network.h"
-#include "LI_Eth.h"
-#include "LI_modbus.h"
+#include "APP_Sensors.h"
+#include "LI_Uart.h"
 #include "stdio.h"
-
+#include "LI_modbus.h"
 
 /* --------------------------------------------------------------------------- */
 /* Public API implementation                                                    */
 /* --------------------------------------------------------------------------- */
 
-void APP_Network_Init(const APP_Network_Config_t *cfg)
+void APP_Sensors_Init(const APP_Sensors_Config_t *cfg)
 {
     if (cfg == NULL)
     {
-        return;
+        return; 
     }
 
-    /* Initialise the Ethernet transport layer (TCP servers + polling task) */
-    if (cfg->transport == LI_MODBUS_TCP)
+    /* Initialise the UART transport layer (RTU servers + polling task) */
+    if (cfg->transport == LI_MODBUS_RTU)
     {
-        // LI_Eth_Init();
+        LI_Uart_Init();
     }
 
     /* Initialise the Modbus protocol layer (slave context + register table) */

@@ -30,9 +30,9 @@ void APP_Network_Init(const APP_Network_Config_t *cfg)
     /* Initialise the Ethernet transport layer (TCP servers + polling task) */
     if (cfg->transport == LI_MODBUS_TCP)
     {
-        // LI_Eth_Init();
+        LI_Eth_Init();
     }
 
     /* Initialise the Modbus protocol layer (slave context + register table) */
-    // LI_Modbus_Init(cfg->transport, cfg->role);
+    LI_Modbus_Init(cfg->transport, cfg->role);
 }

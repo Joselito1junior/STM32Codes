@@ -11,19 +11,7 @@
 #ifndef INC_LI_UART_H_
 #define INC_LI_UART_H_
 
-/* --------------------------------------------------------------------------- */
-/* Generic UART connection types                                                */
-/* --------------------------------------------------------------------------- */
-
-
-/* --------------------------------------------------------------------------- */
-/* Generic UART server helpers                                                   */
-/* --------------------------------------------------------------------------- */
-
-
-/* --------------------------------------------------------------------------- */
-/* Top-level init                                                               */
-/* --------------------------------------------------------------------------- */
+#include "stdint.h"
 
 /**
  * @brief Initialise the UART transport layer.
@@ -33,6 +21,6 @@
  *
  * Must be called once after MX_LWIP_Init() completes.
  */
-void LI_Uart_Init(void);
+uint8_t LI_Uart_Init(void (*callback)(uint8_t, void *, uint16_t));
 
 #endif /* INC_LI_UART_H_ */

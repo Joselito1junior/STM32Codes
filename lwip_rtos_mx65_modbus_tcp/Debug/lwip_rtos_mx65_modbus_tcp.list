@@ -1177,7 +1177,6 @@ void LI_Uart_receive_task(void *argument)
  8000a2e:	f8b7 3256 	ldrh.w	r3, [r7, #598]	@ 0x256
  8000a32:	2bfc      	cmp	r3, #252	@ 0xfc
  8000a34:	d810      	bhi.n	8000a58 <LI_Uart_receive_task+0x64>
-            {
                 frame[frame_len++] = byte;
  8000a36:	f8b7 3256 	ldrh.w	r3, [r7, #598]	@ 0x256
  8000a3a:	1c5a      	adds	r2, r3, #1
@@ -1190,14 +1189,11 @@ void LI_Uart_receive_task(void *argument)
  8000a50:	f5a3 7384 	sub.w	r3, r3, #264	@ 0x108
  8000a54:	5499      	strb	r1, [r3, r2]
  8000a56:	e7dc      	b.n	8000a12 <LI_Uart_receive_task+0x1e>
-            }
             else
-            {
                 frame_len = 0;  /* Reset buffer on error */
  8000a58:	2300      	movs	r3, #0
  8000a5a:	f8a7 3256 	strh.w	r3, [r7, #598]	@ 0x256
  8000a5e:	e7d8      	b.n	8000a12 <LI_Uart_receive_task+0x1e>
-            }
         }
         else 
         {
@@ -1221,27 +1217,28 @@ void LI_Uart_receive_task(void *argument)
  8000a88:	4603      	mov	r3, r0
  8000a8a:	f887 324f 	strb.w	r3, [r7, #591]	@ 0x24f
                 char status_msg[64];
-                snprintf(status_msg, sizeof(status_msg), "Processed RTU frame with status: %d", status);
- 8000a8e:	f997 324f 	ldrsb.w	r3, [r7, #591]	@ 0x24f
- 8000a92:	f107 000c 	add.w	r0, r7, #12
- 8000a96:	4a18      	ldr	r2, [pc, #96]	@ (8000af8 <LI_Uart_receive_task+0x104>)
- 8000a98:	2140      	movs	r1, #64	@ 0x40
- 8000a9a:	f016 f8b9 	bl	8016c10 <sniprintf>
-                Modbus_Uart_Callback(RTU_MSG_RECEIVED, status_msg);
- 8000a9e:	4b17      	ldr	r3, [pc, #92]	@ (8000afc <LI_Uart_receive_task+0x108>)
- 8000aa0:	681b      	ldr	r3, [r3, #0]
- 8000aa2:	f107 020c 	add.w	r2, r7, #12
- 8000aa6:	4611      	mov	r1, r2
- 8000aa8:	2000      	movs	r0, #0
- 8000aaa:	4798      	blx	r3
                 LI_Uart_Send(rtu_response, resp_len);
- 8000aac:	f507 7316 	add.w	r3, r7, #600	@ 0x258
- 8000ab0:	f5a3 7386 	sub.w	r3, r3, #268	@ 0x10c
- 8000ab4:	881a      	ldrh	r2, [r3, #0]
- 8000ab6:	f107 034c 	add.w	r3, r7, #76	@ 0x4c
- 8000aba:	4611      	mov	r1, r2
- 8000abc:	4618      	mov	r0, r3
- 8000abe:	f000 f81f 	bl	8000b00 <LI_Uart_Send>
+ 8000a8e:	f507 7316 	add.w	r3, r7, #600	@ 0x258
+ 8000a92:	f5a3 7386 	sub.w	r3, r3, #268	@ 0x10c
+ 8000a96:	881a      	ldrh	r2, [r3, #0]
+ 8000a98:	f107 034c 	add.w	r3, r7, #76	@ 0x4c
+ 8000a9c:	4611      	mov	r1, r2
+ 8000a9e:	4618      	mov	r0, r3
+ 8000aa0:	f000 f82e 	bl	8000b00 <LI_Uart_Send>
+
+                snprintf(status_msg, sizeof(status_msg), "Processed RTU frame with status: %d", status);
+ 8000aa4:	f997 324f 	ldrsb.w	r3, [r7, #591]	@ 0x24f
+ 8000aa8:	f107 000c 	add.w	r0, r7, #12
+ 8000aac:	4a12      	ldr	r2, [pc, #72]	@ (8000af8 <LI_Uart_receive_task+0x104>)
+ 8000aae:	2140      	movs	r1, #64	@ 0x40
+ 8000ab0:	f016 f8ae 	bl	8016c10 <sniprintf>
+                Modbus_Uart_Callback(RTU_MSG_RECEIVED, status_msg);
+ 8000ab4:	4b11      	ldr	r3, [pc, #68]	@ (8000afc <LI_Uart_receive_task+0x108>)
+ 8000ab6:	681b      	ldr	r3, [r3, #0]
+ 8000ab8:	f107 020c 	add.w	r2, r7, #12
+ 8000abc:	4611      	mov	r1, r2
+ 8000abe:	2000      	movs	r0, #0
+ 8000ac0:	4798      	blx	r3
                 LI_Uart_show_request(frame, frame_len);
  8000ac2:	f8b7 2256 	ldrh.w	r2, [r7, #598]	@ 0x256
  8000ac6:	f507 73a8 	add.w	r3, r7, #336	@ 0x150
@@ -1280,6 +1277,7 @@ static void LI_Uart_Send(const uint8_t *data, uint16_t len)
  8000b06:	6078      	str	r0, [r7, #4]
  8000b08:	460b      	mov	r3, r1
  8000b0a:	807b      	strh	r3, [r7, #2]
+    
     if (len > 0U)
  8000b0c:	887b      	ldrh	r3, [r7, #2]
  8000b0e:	2b00      	cmp	r3, #0
@@ -2903,9 +2901,9 @@ void MX_USART2_UART_Init(void)
  8001360:	4b14      	ldr	r3, [pc, #80]	@ (80013b4 <MX_USART2_UART_Init+0x58>)
  8001362:	4a15      	ldr	r2, [pc, #84]	@ (80013b8 <MX_USART2_UART_Init+0x5c>)
  8001364:	601a      	str	r2, [r3, #0]
-  huart2.Init.BaudRate = 115200;
+  huart2.Init.BaudRate = 9600;
  8001366:	4b13      	ldr	r3, [pc, #76]	@ (80013b4 <MX_USART2_UART_Init+0x58>)
- 8001368:	f44f 32e1 	mov.w	r2, #115200	@ 0x1c200
+ 8001368:	f44f 5216 	mov.w	r2, #9600	@ 0x2580
  800136c:	605a      	str	r2, [r3, #4]
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
  800136e:	4b11      	ldr	r3, [pc, #68]	@ (80013b4 <MX_USART2_UART_Init+0x58>)

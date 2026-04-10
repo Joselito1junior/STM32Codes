@@ -98,13 +98,9 @@ void LI_Uart_receive_task(void *argument)
         if (status == osOK)
         {
             if (frame_len < sizeof(frame))
-            {
                 frame[frame_len++] = byte;
-            }
             else
-            {
                 frame_len = 0;  /* Reset buffer on error */
-            }
         }
         else 
         {
@@ -114,9 +110,10 @@ void LI_Uart_receive_task(void *argument)
                 uint16_t resp_len = 0;
                 Modbus_Status_t status = LI_Modbus_RTU_Process((const uint8_t *)frame, frame_len, rtu_response, &resp_len);
                 char status_msg[64];
+                LI_Uart_Send(rtu_response, resp_len);
+
                 snprintf(status_msg, sizeof(status_msg), "Processed RTU frame with status: %d", status);
                 Modbus_Uart_Callback(RTU_MSG_RECEIVED, status_msg);
-                LI_Uart_Send(rtu_response, resp_len);
                 LI_Uart_show_request(frame, frame_len);
                 LI_Uart_show_response(rtu_response, resp_len);
 
@@ -128,6 +125,7 @@ void LI_Uart_receive_task(void *argument)
 
 static void LI_Uart_Send(const uint8_t *data, uint16_t len)
 {
+    
     if (len > 0U)
     {
         HAL_UART_Transmit_IT(&huart2, (uint8_t *)data, len);

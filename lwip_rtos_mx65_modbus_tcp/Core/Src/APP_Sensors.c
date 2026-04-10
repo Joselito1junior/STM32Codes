@@ -19,8 +19,7 @@
 /* --------------------------------------------------------------------------- */
 /* Private function prototypes                                                 */
 /* --------------------------------------------------------------------------- */
-static void app_sensors_callback(uint8_t event, void *event_data, uint16_t data_len);
-
+static void app_sensors_callback(uint8_t event, void *event_data);
 
 /* --------------------------------------------------------------------------- */
 /* Public API implementation                                                   */
@@ -44,17 +43,13 @@ void APP_Sensors_Init(const APP_Sensors_Config_t *cfg)
     // LI_Modbus_Init(cfg->transport, cfg->role);
 }
 
-static void app_sensors_callback(uint8_t event, void *event_data, uint16_t data_len)
+static void app_sensors_callback(uint8_t event, void *event_data)
 {
     const char *msg = ((char *)event_data != NULL) ? (char *)event_data : "";
-
     switch (event)
     {
     case RTU_MSG_RECEIVED:
-        printf("Received UART frame: ");
-        for (uint16_t i = 0; i < data_len; i++)
-            printf("%02X ", ((uint8_t *)event_data)[i]);
-        printf("\r\n");
+        printf("RTU_MSG_RECEIVED: %s\r\n", msg);
         break;
     default:
         break;

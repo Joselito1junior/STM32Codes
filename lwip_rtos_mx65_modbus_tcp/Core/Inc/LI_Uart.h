@@ -21,6 +21,6 @@
  *
  * Must be called once after MX_LWIP_Init() completes.
  */
-uint8_t LI_Uart_Init(void (*callback)(uint8_t, void *, uint16_t));
+uint8_t LI_Uart_Init(void (*callback)(uint8_t, void *));
 
 #endif /* INC_LI_UART_H_ */

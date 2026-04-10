@@ -1,3 +1,7 @@
-../Core/Src/LI_Uart.c:38:9:LI_Uart_Init	2
-../Core/Src/LI_Uart.c:65:6:HAL_UART_RxCpltCallback	2
-../Core/Src/LI_Uart.c:75:6:receive_uart_task	4
+../Core/Src/LI_Uart.c:42:9:LI_Uart_Init	2
+../Core/Src/LI_Uart.c:70:6:HAL_UART_RxCpltCallback	2
+../Core/Src/LI_Uart.c:81:6:HAL_UART_TxCpltCallback	2
+../Core/Src/LI_Uart.c:87:6:LI_Uart_receive_task	4
+../Core/Src/LI_Uart.c:129:13:LI_Uart_Send	2
+../Core/Src/LI_Uart.c:138:13:LI_Uart_show_request	2
+../Core/Src/LI_Uart.c:148:13:LI_Uart_show_response	2
